@@ -34,12 +34,31 @@
         font-size: 16px;
         color: #757575;
       }
-      @media (max-width: 800px) {
+      @media (max-width: 600px) {
         .container {
           flex-direction: column;
         }
         .text {
-          padding-bottom: 50px;
+          /* position: fixed;
+          color: #fff;
+          background: linear-gradient(180deg, #0008, #0000);
+          top: 0;
+          left: 0;
+          right: 0;
+          padding: 0 5px;
+          text-shadow: 0 1px 2px #000; */
+          display: none;
+        }
+        .title {
+          font-size: 18px;
+          margin: 5px 0;
+        }
+        .subtitle {
+          color: #fff;
+        }
+        .container {
+          padding: 0;
+          margin: 0;
         }
       }
     </style>
@@ -60,15 +79,32 @@
       </main>
     </div>
     <script>
+      let sx, sy;
       let img;
       function preload() {
-        img = loadImage("./images/map.jpg");
+        img = loadImage("./images/map.png");
       }
 
       function setup() {
-        createCanvas(window.innerWidth >= 500 ? 500 : 350, 500);
-        image(img, 0, 0, 500, 500);
+        sx = window.innerWidth >= 600 ? 500 : window.innerWidth;
+        sy = window.innerWidth >= 600 ? 500 : window.innerHeight;
+        createCanvas(sx, sy);
+        image(img, 0, 0, sx, sy);
+        if (window.innerWidth <= 600) {
+          textSize(18);
+          text("Интерактивная", sx - 160, sy / 2 - 110);
+          text("карта", sx-160, sy / 2 - 90);
+          textSize(12);
+          text("Нажмите на любой", sx - 160, sy / 2 - 60)
+          text("из флажков чтобы", sx - 160, sy / 2 - 40)
+          text("узнать больше об", sx - 160, sy / 2 - 20)
+          text("истории храмов", sx - 160, sy / 2)
+        }
       }
+
+      window.onresize = () => {
+        setup();
+      };
 
       function draw() {
         ellipse(100, 100, 50, 50);
