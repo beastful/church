@@ -5,17 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Take me to church</title>
     <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
       body {
         margin: 0;
         padding: 0;
         overflow: hidden;
+        font-family: "Inter", sans-serif;
       }
       * {
         box-sizing: border-box;
       }
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 50px 10px;
+      }
+      .spacer {
+        width: 100px;
+        min-width: 100px;
+      }
+      h1 {
+        font-weight: 500;
+        font-size: 35px;
+      }
+      .subtitle {
+        font-weight: 500;
+        font-size: 16px;
+        color: #757575;
+      }
+      @media (max-width: 800px) {
+        .container {
+          flex-direction: column;
+        }
+        .text {
+          padding-bottom: 50px;
+        }
+      }
     </style>
+    <script src="./lib/p5.min.js"></script>
   </head>
   <body>
-    Map
+    <div class="container">
+      <div class="text">
+        <h1 class="title">Интерактивная карта</h1>
+        <div class="subtitle">
+          Some text lorem ipsum sit dolor sit amet, <br />
+          dolorem ipsum sit dolor sit amet.
+        </div>
+      </div>
+      <div class="spacer"></div>
+      <main id="cnv">
+        <div id="p5_loading" class="loadingclass">Загрузка...</div>
+      </main>
+    </div>
+    <script>
+      let img;
+      function preload() {
+        img = loadImage("./images/map.jpg");
+      }
+
+      function setup() {
+        createCanvas(window.innerWidth >= 500 ? 500 : 350, 500);
+        image(img, 0, 0, 500, 500);
+      }
+
+      function draw() {
+        ellipse(100, 100, 50, 50);
+      }
+    </script>
   </body>
 </html>
