@@ -61,6 +61,20 @@
           margin: 0;
         }
       }
+
+      .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 100;
+        font-weight: 500;
+        font-size: 20px;
+      }
     </style>
     <script src="./lib/p5.min.js"></script>
   </head>
@@ -69,13 +83,13 @@
       <div class="text">
         <h1 class="title">Интерактивная карта</h1>
         <div class="subtitle">
-          Some text lorem ipsum sit dolor sit amet, <br />
-          dolorem ipsum sit dolor sit amet.
+          Нажмите на любой из флажков<br />
+          чтобы узнать больше об истории храмов
         </div>
       </div>
       <div class="spacer"></div>
       <main id="cnv">
-        <div id="p5_loading" class="loadingclass">Загрузка...</div>
+        <div id="p5_loading" class="loading">Загрузка...</div>
       </main>
     </div>
     <script>
@@ -86,19 +100,19 @@
       }
 
       function setup() {
-        sx = window.innerWidth >= 600 ? 500 : window.innerWidth;
+        sx = window.innerWidth >= 600 ? 400 : window.innerWidth;
         sy = window.innerWidth >= 600 ? 500 : window.innerHeight;
         createCanvas(sx, sy);
         image(img, 0, 0, sx, sy);
         if (window.innerWidth <= 600) {
           textSize(18);
           text("Интерактивная", sx - 160, sy / 2 - 110);
-          text("карта", sx-160, sy / 2 - 90);
+          text("карта", sx - 160, sy / 2 - 90);
           textSize(12);
-          text("Нажмите на любой", sx - 160, sy / 2 - 60)
-          text("из флажков чтобы", sx - 160, sy / 2 - 40)
-          text("узнать больше об", sx - 160, sy / 2 - 20)
-          text("истории храмов", sx - 160, sy / 2)
+          text("Нажмите на любой", sx - 160, sy / 2 - 60);
+          text("из флажков чтобы", sx - 160, sy / 2 - 40);
+          text("узнать больше об", sx - 160, sy / 2 - 20);
+          text("истории храмов", sx - 160, sy / 2);
         }
       }
 
