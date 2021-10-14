@@ -19,7 +19,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 50px 10px;
       }
       .spacer {
         width: 100px;
@@ -33,6 +32,9 @@
         font-weight: 500;
         font-size: 16px;
         color: #757575;
+      }
+      .text {
+        padding-left: 20px;
       }
       @media (max-width: 600px) {
         .container {
@@ -73,6 +75,7 @@
         bottom: 0;
         z-index: 100;
         font-weight: 500;
+        background: #fff;
         font-size: 20px;
       }
     </style>
@@ -93,6 +96,20 @@
       </main>
     </div>
     <script>
+      const flags = [
+        {
+          text: ["line one", "line two"],
+          x: 20,
+          y: 50,
+          img: "./images/map.jpg",
+        },
+        {
+          text: ["line first", "line two"],
+          x: 80,
+          y: 40,
+          img: "./images/map.jpg",
+        },
+      ];
       let sx, sy;
       let img;
       function preload() {
@@ -101,7 +118,7 @@
 
       function setup() {
         sx = window.innerWidth >= 600 ? 400 : window.innerWidth;
-        sy = window.innerWidth >= 600 ? 500 : window.innerHeight;
+        sy = window.innerHeight;
         createCanvas(sx, sy);
         image(img, 0, 0, sx, sy);
         if (window.innerWidth <= 600) {
@@ -121,7 +138,14 @@
       };
 
       function draw() {
-        ellipse(100, 100, 50, 50);
+        flags.map(({ x, y, text, img }) => {
+          ellipse((sx / 100) * x, (sy / 100) * y, 20, 20);
+        });
+      }
+
+      function mouseClicked() {
+        ellipse(mouseX, mouseY, 10, 10);
+        return false;
       }
     </script>
   </body>
