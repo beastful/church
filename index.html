@@ -11,6 +11,8 @@
         padding: 0;
         overflow: hidden;
         font-family: "Inter", sans-serif;
+        overflow-y: hidden !important;
+        overflow-x: hidden !important;
       }
       * {
         box-sizing: border-box;
@@ -98,16 +100,130 @@
     <script>
       const flags = [
         {
-          text: ["line one", "line two"],
-          x: 20,
-          y: 50,
-          img: "./images/map.jpg",
+          title: "Line first \n lin two 2",
+          bio: "Long bio about church",
+          x: 50,
+          y: 68,
+          img: "./images/church1.PNG",
+          cx: 45,
+          cy: 45,
         },
         {
-          text: ["line first", "line two"],
-          x: 80,
-          y: 40,
-          img: "./images/map.jpg",
+          title: "Line first \n lin two",
+          bio: "Long bio about church number two",
+          x: 52,
+          y: 77,
+          img: "./images/church2.PNG",
+          cx: 45,
+          cy: 45,
+        },
+        {
+          title: "Line first \n lin two",
+          bio: "Long bio about church number two",
+          x: 55,
+          y: 79,
+          img: "./images/church3.PNG",
+          cx: 0,
+          cy: 0,
+        },
+        {
+          title: "Line first \n lin two",
+          bio: "Long bio about church number two",
+          x: 71,
+          y: 78,
+          img: "./images/church4.PNG",
+          cx: 0,
+          cy: 0,
+        },
+        {
+          title: "Line first \n lin two",
+          bio: "Long bio about church number two",
+          x: 69,
+          y: 73,
+          img: "./images/church5.PNG",
+          cx: 0,
+          cy: 45,
+        },
+        {
+          title: "Line first \n lin two",
+          bio: "Long bio about church number two",
+          x: 53,
+          y: 21,
+          img: "./images/church6.PNG",
+          cx: 0,
+          cy: 45,
+        },
+        {
+          title: "Line first \n lin two",
+          bio: "Long bio about church number two",
+          x: 47,
+          y: 29,
+          img: "./images/church7.PNG",
+          cx: 0,
+          cy: 45,
+        },
+        {
+          title: "Line first \n lin two",
+          bio: "Long bio about church number two",
+          x: 58,
+          y: 8,
+          img: "./images/church8.PNG",
+          cx: 0,
+          cy: 45,
+        },
+        {
+          title: "Line first \n lin two",
+          bio: "Long bio about church number two",
+          x: 18,
+          y: 75,
+          img: "./images/church9.PNG",
+          cx: 45,
+          cy: 45,
+        },
+        {
+          title: "Line first \n lin two",
+          bio: "Long bio about church number two",
+          x: 25,
+          y: 44,
+          img: "./images/church10.PNG",
+          cx: 45,
+          cy: 45,
+        },
+        {
+          title: "Line first \n lin two",
+          bio: "Long bio about church number two",
+          x: 23,
+          y: 5,
+          img: "./images/church11.PNG",
+          cx: 45,
+          cy: 0,
+        },
+        {
+          title: "Line first \n lin two",
+          bio: "Long bio about church number two",
+          x: 30,
+          y: 7,
+          img: "./images/church12.PNG",
+          cx: 0,
+          cy: 0,
+        },
+        {
+          title: "Line first \n lin two",
+          bio: "Long bio about church number two",
+          x: 27,
+          y: 2,
+          img: "./images/church13.PNG",
+          cx: 0,
+          cy: 20,
+        },
+        {
+          title: "Line first \n lin two",
+          bio: "Long bio about church number two",
+          x: 25,
+          y: 64,
+          img: "./images/church14.PNG",
+          cx: 45,
+          cy: 45,
         },
       ];
       let sx, sy;
@@ -121,7 +237,9 @@
         sy = window.innerHeight;
         createCanvas(sx, sy);
         image(img, 0, 0, sx, sy);
+        noLoop();
         if (window.innerWidth <= 600) {
+          fill("#000");
           textSize(18);
           text("Интерактивная", sx - 160, sy / 2 - 110);
           text("карта", sx - 160, sy / 2 - 90);
@@ -133,18 +251,47 @@
         }
       }
 
-      window.onresize = () => {
-        setup();
-      };
-
       function draw() {
-        flags.map(({ x, y, text, img }) => {
-          ellipse((sx / 100) * x, (sy / 100) * y, 20, 20);
+        fill("lime");
+        flags.map(({ x, y, title, img, cx, cy }) => {
+          ellipse((sx / 100) * x, (sy / 100) * y, 10, 10);
+          loadImage(img, (img) => {
+            fill("#fff");
+            rect((sx / 100) * x - cx, (sy / 100) * y - cy, 45, 45);
+            image(
+              img,
+              (sx / 100) * x + 2.5 - cx,
+              (sy / 100) * y + 2.5 - cy,
+              40,
+              40
+            );
+            // textSize(12);
+            // textStyle(BOLD)
+            // fill("#000");
+            // text(title, (sx / 100) * x, (sy / 100) * y);
+          });
         });
       }
 
+      window.onresize = () => {
+        setup();
+        draw();
+      };
+
       function mouseClicked() {
+        fill("red");
         ellipse(mouseX, mouseY, 10, 10);
+
+        flags.map(({ x, y, img, cx, cy }) => {
+          if (
+            mouseX >= (sx / 100) * x - cx &&
+            mouseX <= (sx / 100) * x - cx + 45 &&
+            mouseY >= (sy / 100) * y - cy &&
+            mouseY <= (sy / 100) * y - cy + 45 
+          ) {
+            console.log(img);
+          }
+        });
         return false;
       }
     </script>
