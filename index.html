@@ -2,6 +2,10 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Take me to church</title>
     <style>
@@ -43,14 +47,6 @@
           flex-direction: column;
         }
         .text {
-          /* position: fixed;
-          color: #fff;
-          background: linear-gradient(180deg, #0008, #0000);
-          top: 0;
-          left: 0;
-          right: 0;
-          padding: 0 5px;
-          text-shadow: 0 1px 2px #000; */
           display: none;
         }
         .title {
@@ -80,6 +76,46 @@
         background: #fff;
         font-size: 20px;
       }
+
+      .drop {
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        bottom: -100%;
+        left: 0;
+        background: #fff;
+        z-index: 200;
+        transition: 0.5s;
+        overflow-y: auto;
+      }
+
+      .nav {
+        display: flex;
+        padding: 10px;
+        width: 100%;
+      }
+
+      .spacer-nav {
+        width: 100%;
+      }
+
+      .icon {
+        width: 55px;
+        min-width: 55px;
+        height: 55px;
+        background: red;
+        box-shadow: 0 1px 2px #75757599;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 60px;
+        color: #fff;
+        cursor: pointer;
+      }
+      .drop-container {
+        padding: 20px;
+        text-align: center;
+      }
     </style>
     <script src="./lib/p5.min.js"></script>
   </head>
@@ -97,11 +133,26 @@
         <div id="p5_loading" class="loading">Загрузка...</div>
       </main>
     </div>
+    <div id="drop" class="drop">
+      <div class="nav">
+        <div class="spacer-nav"></div>
+        <div onclick="dropClose()" class="icon">
+          <i class="material-icons"> close </i>
+        </div>
+      </div>
+
+      <div class="drop-container">
+        <img id="img" src="./images/church1.png" width="200" height="200" />
+        <h2 id="title"></h2>
+        <div id="bio"></div>
+      </div>
+    </div>
     <script>
+      const id = (id) => document.getElementById(id);
       const flags = [
         {
-          title: "Line first \n lin two 2",
-          bio: "Long bio about church",
+          title: "Карафуто-Дзиндзя б-р Анкудинова, 2а, Южно-Сахалинск",
+          bio: "Храм Карафуто-Дзиндзя был для жителей Южного Сахалина символом колонизации новых земель. Святилище было построено 23 августа 1911 года на территории нынешнего Южно-Сахалинска.5 сентября 1931 года императором Хирохито храму Карафуто-Дзиндзя были подарены драгоценные реликвии. Для хранения реликвий на территории храма была построена бетонная сокровищница «Хобуцугурадэн». ",
           x: 50,
           y: 68,
           img: "./images/church1.png",
@@ -109,8 +160,8 @@
           cy: 45,
         },
         {
-          title: "Line first \n lin two",
-          bio: "Long bio about church number two",
+          title: "Анива-Дзиндзя ул. Краснофлотская 15/2, Корсаков",
+          bio: "Синтоистский храм Анива-Дзиндзя был открыт в октябре 1913 года. Храм располагался на склоне холма Кагураока, вокруг которого был спланирован город Одомари. До настоящего времени от храма сохранилась бетонная трехмаршевая лестница.",
           x: 52,
           y: 77,
           img: "./images/church2.png",
@@ -118,8 +169,8 @@
           cy: 45,
         },
         {
-          title: "Line first \n lin two",
-          bio: "Long bio about church number two",
+          title: "Мэрей Хатиман дзиндзя Пригородное, Корсаковский район",
+          bio: "Синтоистский храм Мэрэй Хатиман-Дзиндзя был открыт в 1924 году в Пригородном (Корсаковский район). Он был посвящен герою войны на Сахалине — командиру батальона майору Нисикубо. Кроме стелы, от храма сохранилась бетонная чаша «тёзу бати», предназначенная для ритуального омовения рук и рта перед посещением храма.",
           x: 55,
           y: 79,
           img: "./images/church3.png",
@@ -127,8 +178,8 @@
           cy: 0,
         },
         {
-          title: "Line first \n lin two",
-          bio: "Long bio about church number two",
+          title: "Нагахама-Дзиндзя Озерское, Корсаковский район",
+          bio: "Представляет собой бетонное основание высотой 2,5 метра и лежащий рядом валун стелы «Тюконхи» (памятник показавшим верность) синтоистского храма Нагахама-Дзиндзя, основанного в 1923 году в восточной части села Озерское. ",
           x: 71,
           y: 78,
           img: "./images/church4.png",
@@ -136,8 +187,9 @@
           cy: 0,
         },
         {
-          title: "Line first \n lin two",
-          bio: "Long bio about church number two",
+          title:
+            "Тоннай Инари-Дзиндзя улица Лесная, 16, возле озера Седых, село Охотское",
+          bio: "Синтоистский храм в селении Тоннай (ныне село Охотское) был открыт в 1923 году. На площадке на месте храма сохранилась бетонная стела «Тюконхи» высотой 5 метров на двухъярусном основании. Памятник был установлен на земляном холме, на который вела бетонная лестница.",
           x: 69,
           y: 73,
           img: "./images/church5.png",
@@ -145,8 +197,8 @@
           cy: 45,
         },
         {
-          title: "Line first \n lin two",
-          bio: "Long bio about church number two",
+          title: "Сиритору-Дзиндзя ул. Ленина, 24, Макаров",
+          bio: "Остатки храма Сиритору Дзиндзя, открытого в августе 1925 года, расположены над центральной частью города Макаров в районе городского стадиона. К ним ведет длинная бетонная лестница, по краям которой расположены парные фигурные основания для каменных фонарей «иши тооро».",
           x: 53,
           y: 21,
           img: "./images/church6.png",
@@ -154,8 +206,9 @@
           cy: 45,
         },
         {
-          title: "Line first \n lin two",
-          bio: "Long bio about church number two",
+          title:
+            "Мотодомари-Дзиндзя Восточное — село в Макаровском городском округе Сахалинской области России, в 41 км от районного центра.",
+          bio: "Храм был открыт 6 июля 1921 года и посвящен богине Окинакатараси Химэно Микото - покровительнице погибших в бою воинов. Сохранилась стела «Тюконхи» высотой 2,2 метра, выполненная в форме артиллерийского снаряда, стоящая на бетонном основании.",
           x: 47,
           y: 29,
           img: "./images/church7.png",
@@ -163,8 +216,8 @@
           cy: 45,
         },
         {
-          title: "Line first \n lin two",
-          bio: "Long bio about church number two",
+          title: "Стела «Тюконхи» Ниитой-Дзиндзя село Новое, Макаровский район",
+          bio: "Стела расположена в северной части села Новое на краю поля. Вертикальная каменная плита установлена на бетонном основании.",
           x: 58,
           y: 8,
           img: "./images/church8.png",
@@ -172,8 +225,8 @@
           cy: 45,
         },
         {
-          title: "Line first \n lin two",
-          bio: "Long bio about church number two",
+          title: "Хонто-Дзиндзя Невельск",
+          bio: "Синтоистский храм Хонто-Дзиндзя был открыт в 1922 году на склоне террасы в центральной части города. Сохранился бетонный фундамент храма, показывающий его планировку.",
           x: 18,
           y: 75,
           img: "./images/church9.png",
@@ -181,8 +234,8 @@
           cy: 45,
         },
         {
-          title: "Line first \n lin two",
-          bio: "Long bio about church number two",
+          title: "Томариору-Дзиндзя северная часть Томари",
+          bio: "Синтоистский храм Томариору-Дзиндзя был открыт в 1922 году. Сегодня остатки храма представляют собой большой комплекс, протянувшийся на расстоянии 210 метров. ",
           x: 25,
           y: 44,
           img: "./images/church10.png",
@@ -190,8 +243,8 @@
           cy: 45,
         },
         {
-          title: "Line first \n lin two",
-          bio: "Long bio about church number two",
+          title: "Эсутору-Дзиндзя Углегорск",
+          bio: "Храм Эсуторо-Дзиндзя построен в 1918 году, по другим данным - 25 октября 1921 года. До наших дней сохранились только бетонные фундаменты храмовых построек, постаменты каменных фонарей, ворота «тории» и установленная слева от них стела в память о присвоении храму статуса «кэнся» и в честь 2600-летия империи, которое японская нация отмечала в 1940 году.",
           x: 23,
           y: 5,
           img: "./images/church11.png",
@@ -199,8 +252,8 @@
           cy: 0,
         },
         {
-          title: "Line first \n lin two",
-          bio: "Long bio about church number two",
+          title: "Танзан-Дзиндзя северная часть села Ударное",
+          bio: "Храм располагался в северной части поселка Тэйхай (ныне село Ударное). Сохранился фрагмент бетонной лестницы, расположенной возле основания террасы, на которой располагался храм. На одной из площадок осталась каменная чаша для ритуального омовения с надписью «хо но».",
           x: 30,
           y: 7,
           img: "./images/church12.png",
@@ -208,8 +261,8 @@
           cy: 0,
         },
         {
-          title: "Line first \n lin two",
-          bio: "Long bio about church number two",
+          title: "Тоёхата-Дзиндзя южная часть поселка Лесогорское",
+          bio: "Храм располагался в южной части поселка Наёси (ныне село Лесогорское), называемой Тоёхата. В настоящее время стела сброшена с постомента.",
           x: 27,
           y: 2,
           img: "./images/church13.png",
@@ -217,8 +270,8 @@
           cy: 20,
         },
         {
-          title: "Line first \n lin two",
-          bio: "Long bio about church number two",
+          title: "Маока-Дзиндзя ул. Победы, 18а, Холмск ",
+          bio: "В июле 1909 года был построен новый храм для быстро растущего портового города. В мае 1934 года Маока-Дзиндзя, на строительство которого было потрачено 60 тысяч иен, открылся для прихожан. Сохранилась укрепленная камнем стенка у основания каменной лестницы, ведущей к храму, открытому 31 августа 1910 года. В верхней части лестницы сохранились шестигранные основания для каменных фонарей «иши тооро».",
           x: 25,
           y: 64,
           img: "./images/church14.png",
@@ -228,6 +281,15 @@
       ];
       let sx, sy;
       let img;
+
+      function dropOpen() {
+        id("drop").style.bottom = 0;
+      }
+
+      function dropClose() {
+        id("drop").style.bottom = "-100%";
+      }
+
       function preload() {
         img = loadImage("./images/map.PNG");
       }
@@ -239,6 +301,7 @@
         image(img, 0, 0, sx, sy);
         noLoop();
         if (window.innerWidth <= 600) {
+          textAlign(LEFT)
           fill("#000");
           textSize(18);
           text("Интерактивная", sx - 160, sy / 2 - 110);
@@ -252,9 +315,20 @@
       }
 
       function draw() {
-        fill("lime");
         flags.map(({ x, y, title, img, cx, cy }) => {
+          fill("lime");
           ellipse((sx / 100) * x, (sy / 100) * y, 10, 10);
+          fill("#fff");
+          rect((sx / 100) * x - cx, (sy / 100) * y - cy, 45, 45);
+          fill("#000");
+          textSize(10);
+          textAlign(CENTER);
+          textStyle(BOLD);
+          text(
+            "Загрузка \n ...",
+            (sx / 100) * x - cx + 24,
+            (sy / 100) * y - cy + 23
+          );
           loadImage(img, (img) => {
             fill("#fff");
             rect((sx / 100) * x - cx, (sy / 100) * y - cy, 45, 45);
@@ -265,10 +339,6 @@
               40,
               40
             );
-            // textSize(12);
-            // textStyle(BOLD)
-            // fill("#000");
-            // text(title, (sx / 100) * x, (sy / 100) * y);
           });
         });
       }
@@ -279,17 +349,17 @@
       };
 
       function mouseClicked() {
-        fill("red");
-        ellipse(mouseX, mouseY, 10, 10);
-
-        flags.map(({ x, y, img, cx, cy }) => {
+        flags.map(({ x, y, img, cx, cy, title, bio }) => {
           if (
             mouseX >= (sx / 100) * x - cx &&
             mouseX <= (sx / 100) * x - cx + 45 &&
             mouseY >= (sy / 100) * y - cy &&
-            mouseY <= (sy / 100) * y - cy + 45 
+            mouseY <= (sy / 100) * y - cy + 45
           ) {
-            console.log(img);
+            id("img").src = img;
+            id("title").innerHTML = title;
+            id("bio").innerHTML = bio;
+            dropOpen();
           }
         });
         return false;
